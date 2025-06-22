@@ -25,6 +25,7 @@ This project demonstrates basic CRUD operations for managing students and shows 
 | `check_student()` | Check if a student exists in the list |
 | `show_students()` | Display all students (managed via the listbox in the GUI) |
 | `clear_students()` | Clear all students from the list with confirmation |
+| `update_student()` | Update an existing student to a new name |
 
 ---
 

@@ -12,7 +12,7 @@ class StudentManagerApp:
     def __init__(self, master):
         self.master = master
         self.master.title("Students Manager")
-        self.master.geometry("400x400")
+        self.master.geometry("720x400")
         self.master.resizable(False, False)
 
         # Internal persistence (simulate file with variable)
@@ -53,6 +53,9 @@ class StudentManagerApp:
 
         clear_btn = tk.Button(buttons_frame, text="Clear All", command=self.clear_students, width=15)
         clear_btn.grid(row=1, column=0, padx=5, pady=5)
+
+        update_btn = tk.Button(buttons_frame, text="Update Student", command=self.update_student, width=15)
+        update_btn.grid(row=1, column=1, padx=5, pady=5)
 
         exit_btn = tk.Button(buttons_frame, text="Exit", command=self.master.quit, width=15)
         exit_btn.grid(row=1, column=2, padx=5, pady=5)
@@ -102,6 +105,30 @@ class StudentManagerApp:
             messagebox.showinfo("Found", f"Student {name} is in the list.")
         else:
             messagebox.showinfo("Not Found", f"Student {name} not found.")
+
+    def update_student(self):
+        selected = self.listbox.curselection()
+        
+        if not selected:
+            messagebox.showwarning("Selection error", "Please select a student to update")
+        
+        if selected:
+            old_name = self.listbox.get(selected)
+            new_name = simpledialog.askstring("Update Student", f"Enter new name for {old_name}:")
+            if new_name:
+                new_name = new_name.strip().title()
+
+                if not new_name:
+                    messagebox.showwarning("Input Error", "New name cannot be empty")
+            
+                if new_name in self._data_storage:
+                    messagebox.showwarning("Duplicate", f"Student {new_name} is already in the list")
+                index = self._data_storage.index(old_name)
+                self._data_storage[index] = new_name
+                self.save_data()
+                self.refresh_listbox()
+                messagebox.showinfo("Updated", f"Student name updated to: {new_name}")
+
 
     def clear_students(self):
         confirm = messagebox.askyesno("Confirm", "Are you sure you want to clear all students?")
