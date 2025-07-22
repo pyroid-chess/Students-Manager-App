@@ -1,6 +1,6 @@
 """
 Students Manager GUI
-Logic Made By - youcefshaaban ©
+Logic - Functions Made By - youcefshaaban ©
 With Tkinter GUI by ChatGPT 2025
 """
 
@@ -13,7 +13,6 @@ class StudentManagerApp:
         self.master = master
         self.master.title("Students Manager")
         self.master.geometry("720x400")
-        self.master.resizable(False, False)
 
         # Internal persistence (simulate file with variable)
         self._data_storage = self.load_data()
@@ -118,16 +117,17 @@ class StudentManagerApp:
             if new_name:
                 new_name = new_name.strip().title()
 
-                if not new_name:
+            if not new_name:
                     messagebox.showwarning("Input Error", "New name cannot be empty")
-            
-                if new_name in self._data_storage:
+                    return
+            if new_name in self._data_storage:
                     messagebox.showwarning("Duplicate", f"Student {new_name} is already in the list")
-                index = self._data_storage.index(old_name)
-                self._data_storage[index] = new_name
-                self.save_data()
-                self.refresh_listbox()
-                messagebox.showinfo("Updated", f"Student name updated to: {new_name}")
+                    return
+            index = self._data_storage.index(old_name)
+            self._data_storage[index] = new_name
+            self.save_data()
+            self.refresh_listbox()
+            messagebox.showinfo("Updated", f"Student name updated to: {new_name}")
 
 
     def clear_students(self):

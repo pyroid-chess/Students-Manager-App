@@ -18,14 +18,14 @@ This project demonstrates basic CRUD operations for managing students and shows 
 
 ## ⚙️ Available Functions
 
-| Function | Description |
-| -------- | ------------ |
-| `add_student()` | Add a new student to the list |
-| `remove_student()` | Remove a selected student from the list |
-| `check_student()` | Check if a student exists in the list |
-| `show_students()` | Display all students (managed via the listbox in the GUI) |
-| `clear_students()` | Clear all students from the list with confirmation |
-| `update_student()` | Update an existing student to a new name |
+| Function           | Description                                               |
+| ------------------ | --------------------------------------------------------- |
+| `add_student()`    | Add a new student to the list                             |
+| `remove_student()` | Remove a selected student from the list                   |
+| `check_student()`  | Check if a student exists in the list                     |
+| `show_students()`  | Display all students (managed via the listbox in the GUI) |
+| `clear_students()` | Clear all students from the list with confirmation        |
+| `update_student()` | Update an existing student to a new name                  |
 
 ---
 
@@ -74,10 +74,48 @@ python --version
 python app.py
 ```
 
-### If it didn't work then you have to install Tkinter
+### If it didn't work then you'll have to install Tkinter
+
+### On Windows
+
 ```bash
-# Installing Tkinter
+# 1️⃣ Installing Tkinter
 pip install tkinter
 ```
+
+### On Linux, Mac:
+
+- Installing in a Virtual Environment (Recommended)
+  ```bash
+  python3 -m venv .venv
+  source .venv/bin/activate
+  pip install tkinter
+  ```
+- Installing Tkinter Gloabally in the system
+
+  - Debian / Ubuntu Based Distros
+
+  ```bash
+  sudo apt install python3-tk
+  ```
+
+  - Fedora
+
+  ```bash
+  sudo dnf install python3-tkinter
+  ```
+
+  - Arch
+
+  ```bash
+  sudo pacman -S tk
+  ```
+
+  ### To Test if tkinter is working type in terminal:
+
+  ```bash
+  python3 -m tkinter
+  # Should Popup a Window
+  ```
 
 ### Then you are ready to go.
