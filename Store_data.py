@@ -7,6 +7,9 @@ With Tkinter GUI by ChatGPT 2025
 import tkinter as tk
 from tkinter import messagebox, simpledialog, Listbox, Scrollbar
 import pickle
+import os
+
+DATA_FILE = "students_data.pkl"
 
 class StudentManagerApp:
     def __init__(self, master):
@@ -14,7 +17,7 @@ class StudentManagerApp:
         self.master.title("Students Manager")
         self.master.geometry("720x400")
 
-        # Internal persistence (simulate file with variable)
+        # Load data from file
         self._data_storage = self.load_data()
 
         # UI Elements
@@ -107,28 +110,25 @@ class StudentManagerApp:
 
     def update_student(self):
         selected = self.listbox.curselection()
-        
         if not selected:
             messagebox.showwarning("Selection error", "Please select a student to update")
+            return
         
-        if selected:
-            old_name = self.listbox.get(selected)
-            new_name = simpledialog.askstring("Update Student", f"Enter new name for {old_name}:")
-            if new_name:
-                new_name = new_name.strip().title()
-
+        old_name = self.listbox.get(selected)
+        new_name = simpledialog.askstring("Update Student", f"Enter new name for {old_name}:")
+        if new_name:
+            new_name = new_name.strip().title()
             if not new_name:
-                    messagebox.showwarning("Input Error", "New name cannot be empty")
-                    return
+                messagebox.showwarning("Input Error", "New name cannot be empty")
+                return
             if new_name in self._data_storage:
-                    messagebox.showwarning("Duplicate", f"Student {new_name} is already in the list")
-                    return
+                messagebox.showwarning("Duplicate", f"Student {new_name} is already in the list")
+                return
             index = self._data_storage.index(old_name)
             self._data_storage[index] = new_name
             self.save_data()
             self.refresh_listbox()
             messagebox.showinfo("Updated", f"Student name updated to: {new_name}")
-
 
     def clear_students(self):
         confirm = messagebox.askyesno("Confirm", "Are you sure you want to clear all students?")
@@ -144,14 +144,21 @@ class StudentManagerApp:
             self.listbox.insert(tk.END, student)
 
     def save_data(self):
-        # Save to internal pickle in attribute
-        self._data_blob = pickle.dumps(self._data_storage)
+        try:
+            with open(DATA_FILE, "wb") as file:
+                pickle.dump(self._data_storage, file)
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to save data: {e}")
 
     def load_data(self):
-        try:
-            return pickle.loads(self._data_blob)
-        except AttributeError:
-            return []
+        if os.path.exists(DATA_FILE):
+            try:
+                with open(DATA_FILE, "rb") as file:
+                    return pickle.load(file)
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to load data: {e}")
+                return []
+        return []
 
 if __name__ == "__main__":
     root = tk.Tk()
