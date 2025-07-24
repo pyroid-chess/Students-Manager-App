@@ -12,7 +12,7 @@ This project demonstrates basic CRUD operations for managing students and shows 
 - **Type:** Python GUI Application
 - **Purpose:** Add, remove, check, display, and clear students easily through an intuitive GUI.
 - **Original Logic:** Created by `youcefshaaban`.
-- **GUI Integration:** Implemented with `tkinter` and smart in-memory storage.
+- **GUI Integration:** Implemented with `tkinter` and enhanced by ChatGPT.
 
 ---
 
@@ -29,15 +29,17 @@ This project demonstrates basic CRUD operations for managing students and shows 
 
 ---
 
-## 💾 Data Persistence
+## 💾 Data Persistence (Updated)
 
 **How does it store the data?**
 
-- This project uses **In-Memory Serialization** (`pickle`) to store the list of students **inside the program memory only**.
-- The data **will persist as long as the program is running**.
-- **Note:** Once you close and re-open the app, the student list resets because no external files or databases are used.
+- ✅ This project now uses **persistent file-based storage** using Python's built-in `pickle` module.
+- ✅ All student data is saved to a file named `students_data.pkl`.
+- ✅ Every time you add, remove, update, or clear students, the data is automatically saved.
+- ✅ When the app is launched, it **loads the previous student list from the file**, if available.
+- ❗ If the file is missing or corrupted, a new empty list will be created.
 
-This approach is perfect for simple demos and educational use.
+This makes the app usable beyond a single session, while still being easy to run and understand.
 
 ---
 
@@ -49,6 +51,7 @@ To run this project, you need:
 - Standard Python library only:
   - `tkinter` (usually bundled with Python)
   - `pickle` (built-in)
+  - `os` (built-in)
 
 No third-party packages required.
 
@@ -72,50 +75,3 @@ python --version
 
 # 2️⃣ Run the Python file:
 python app.py
-```
-
-### If it didn't work then you'll have to install Tkinter
-
-### On Windows
-
-```bash
-# 1️⃣ Installing Tkinter
-pip install tkinter
-```
-
-### On Linux, Mac:
-
-- Installing in a Virtual Environment (Recommended)
-  ```bash
-  python3 -m venv .venv
-  source .venv/bin/activate
-  pip install tkinter
-  ```
-- Installing Tkinter Gloabally in the system
-
-  - Debian / Ubuntu Based Distros
-
-  ```bash
-  sudo apt install python3-tk
-  ```
-
-  - Fedora
-
-  ```bash
-  sudo dnf install python3-tkinter
-  ```
-
-  - Arch
-
-  ```bash
-  sudo pacman -S tk
-  ```
-
-  ### To Test if tkinter is working type in terminal:
-
-  ```bash
-  python3 -m tkinter
-  # Should Popup a Window
-  ```
-
-### Then you are ready to go.
